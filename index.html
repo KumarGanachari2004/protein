@@ -113,11 +113,11 @@ nav{
 .btn-primary{
   background:var(--coral);color:white;padding:17px 34px;border-radius:100px;
   font-weight:700;font-size:15px;position:relative;overflow:hidden;
-  transition:transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow:0 6px 0 #c73f22;
+  transition:transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+  box-shadow:0 6px 0 #c73f22, 0 0 20px rgba(255, 90, 54, 0.3);
 }
-.btn-primary:hover{transform:translateY(-3px);box-shadow:0 9px 0 #c73f22;}
-.btn-primary:active{transform:translateY(3px);box-shadow:0 2px 0 #c73f22;}
+.btn-primary:hover{transform:translateY(-6px) scale(1.05);box-shadow:0 12px 0 #c73f22, 0 0 30px rgba(255, 90, 54, 0.6); animation: bounce 0.6s ease-in-out;}
+.btn-primary:active{transform:translateY(2px);box-shadow:0 2px 0 #c73f22;}
 .btn-primary::after{
   content:'';position:absolute;inset:0;
   background:linear-gradient(120deg,transparent,rgba(255,255,255,0.4),transparent);
@@ -145,6 +145,34 @@ nav{
 }
 @keyframes scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 
+/* ===== ANIMATIONS ===== */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(198, 241, 53, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(198, 241, 53, 0.6); }
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+.show { animation: slideUp 0.8s ease-out forwards; }
+.show.card { animation: slideUp 0.8s ease-out forwards; }
+
 /* ===== SECTION HEADER ===== */
 .section{padding:100px 6%;}
 .section-head{max-width:640px;margin-bottom:56px;}
@@ -160,10 +188,24 @@ nav{
 .card{
   background:white;border-radius:22px;padding:28px;
   border:1px solid rgba(27,31,24,0.08);
-  transition:transform 0.3s ease, box-shadow 0.3s ease;
+  transition:transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, background 0.3s ease;
   position:relative;
+  overflow:hidden;
 }
-.card:hover{transform:translateY(-8px);box-shadow:0 20px 40px rgba(27,31,24,0.1);}
+.card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+  animation: shimmer 3s infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.card:hover::before { opacity: 1; }
+.card:hover{transform:translateY(-12px) scale(1.02);box-shadow:0 30px 60px rgba(27,31,24,0.15), 0 0 40px rgba(198, 241, 53, 0.2);background:rgba(198, 241, 53, 0.02);}
 .card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px;}
 .badge{
   background:var(--olive-light);color:var(--olive);font-size:11px;font-weight:700;
@@ -175,9 +217,10 @@ nav{
 .ring-fg{
   fill:none;stroke:var(--coral);stroke-width:6;stroke-linecap:round;
   stroke-dasharray:163;stroke-dashoffset:163;
-  transition:stroke-dashoffset 1.4s cubic-bezier(.2,.8,.2,1);
+  transition:stroke-dashoffset 2s cubic-bezier(.34, 1.56, .64, 1), stroke 0.3s ease;
 }
-.card.in-view .ring-fg{stroke-dashoffset:var(--offset);}
+.card.in-view .ring-fg{stroke-dashoffset:var(--offset); animation: pulse 2s ease-in-out infinite 2s;}
+.card:hover .ring-fg { stroke: var(--lime); filter: drop-shadow(0 0 8px var(--coral)); }
 .ring-label{
   position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
 }
@@ -190,10 +233,11 @@ nav{
 .add-btn{
   background:var(--charcoal);color:var(--lime);
   width:42px;height:42px;border-radius:50%;font-size:20px;
-  display:flex;align-items:center;justify-content:center;
-  transition:transform 0.25s ease, background 0.25s ease;
+  display:flex;align-item3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 4px 15px rgba(255, 90, 54, 0.2);
 }
-.add-btn:hover{background:var(--coral);color:white;transform:rotate(90deg) scale(1.1);}
+.add-btn:hover{background:var(--coral);color:white;transform:rotate(90deg) scale(1.2); box-shadow: 0 8px 25px rgba(255, 90, 54, 0.5); animation: bounce 0.6s ease-in-out;}
+.add-btn.added{background:var(--olive); animation: pulse 0.6s ease-out;color:white;transform:rotate(90deg) scale(1.1);}
 .add-btn.added{background:var(--olive);}
 
 /* ===== CALCULATOR ===== */
@@ -363,78 +407,47 @@ footer{background:var(--olive);color:var(--cream);padding:60px 6% 30px;border-ra
 </footer>
 
 <script>
-const API_URL = 'http://localhost:5000'; // Change this to your deployed backend URL
+<script>
+// ========== CONFIG ==========
+const API_URL = 'http://localhost:5000';
 let PRODUCTS = [];
 
-// Fetch products from backend
+// ========== FETCH FROM BACKEND ==========
 async function loadProducts() {
   try {
     const response = await fetch(`${API_URL}/api/products`);
-    if (!response.ok) throw new Error('Failed to fetch products');
+    const result = await response.json();
     
-    const data = await response.json();
-    PRODUCTS = data.map(p => ({
-      ...p,
-      desc: p.description,
-      protein: p.proteinGrams,
-      serving: p.servingSizeGrams
-    }));
-    renderProducts();
+    if (result.success) {
+      PRODUCTS = result.data;
+      renderProducts();
+      updateCalc();
+    } else {
+      showError('Failed to load products');
+    }
   } catch (error) {
-    console.error('Error loading products:', error);
-    alert('Could not load products. Make sure backend is running on http://localhost:5000');
+    console.error('Error:', error);
+    showError(`Cannot connect to backend at ${API_URL}`);
   }
 }
 
-function renderProducts() {
-  const grid = document.getElementById('product-grid');
-  grid.innerHTML = '';
-  const RADIUS = 26;
-  const CIRC = 2 * Math.PI * RADIUS;
-
-  PRODUCTS.forEach((p, i) => {
-    const pct = Math.min(100, Math.round((p.protein / 60) * 100));
-    const offset = CIRC - (pct/100)*CIRC;
-    const card = document.createElement('div');
-    card.className = 'card reveal';
-    card.style.setProperty('--offset', offset);
-    card.innerHTML = `
-      <div class="card-top">
-        <span class="badge">${p.badge || 'Popular'}</span>
-        <div class="ring-wrap">
-          <svg width="64" height="64" viewBox="0 0 64 64">
-            <circle class="ring-bg" cx="32" cy="32" r="${RADIUS}"></circle>
-            <circle class="ring-fg" cx="32" cy="32" r="${RADIUS}" style="stroke-dasharray:${CIRC};"></circle>
-          </svg>
-          <div class="ring-label"><b>${p.protein}g</b><span>protein</span></div>
-        </div>
-      </div>
-      <h3>${p.name}</h3>
-      <p class="desc">${p.desc} · ${p.serving}g pack</p>
-      <div class="card-bottom">
-        <span class="price">₹${p.price}</span>
-        <button class="add-btn" title="Add to cart">+</button>
-      </div>
-    `;
-    grid.appendChild(card);
-
-    card.querySelector('.add-btn').addEventListener('click', function(){
-      this.textContent = '✓';
-      this.classList.add('added');
-      setTimeout(()=>{ this.textContent = '+'; this.classList.remove('added'); }, 1400);
-    });
-  });
-
-  // Re-observe reveal elements
-  const revealEls = document.querySelectorAll('.reveal');
-  revealEls.forEach(el=>io.observe(el));
-  document.querySelectorAll('.card').forEach(el=>io.observe(el));
+function showError(message) {
+  const errorDiv = document.createElement('div');
+  errorDiv.style.cssText = 'position:fixed;top:20px;right:20px;background:#FF5A36;color:white;padding:16px 24px;border-radius:12px;font-weight:600;z-index:1000;box-shadow:0 8px 24px rgba(0,0,0,0.2);animation:slideUp 0.3s ease-out;';
+  errorDiv.textContent = message;
+  document.body.appendChild(errorDiv);
+  setTimeout(() => errorDiv.remove(), 5000);
 }
 
-loadProducts();
+function showSuccess(message) {
+  const successDiv = document.createElement('div');
+  successDiv.style.cssText = 'position:fixed;top:20px;right:20px;background:#3D4F2B;color:#C6F135;padding:16px 24px;border-radius:12px;font-weight:600;z-index:1000;box-shadow:0 8px 24px rgba(0,0,0,0.2);animation:slideUp 0.3s ease-out;';
+  successDiv.textContent = message;
+  document.body.appendChild(successDiv);
+  setTimeout(() => successDiv.remove(), 3000);
+}
 
-// reveal on scroll
-const revealEls = document.querySelectorAll('.reveal');
+// ========== RENDER PRODUCTS ==========
 const io = new IntersectionObserver((entries)=>{
   entries.forEach(e=>{
     if(e.isIntersecting){
@@ -443,9 +456,56 @@ const io = new IntersectionObserver((entries)=>{
     }
   });
 },{threshold:0.15});
+
+const grid = document.getElementById('product-grid');
+const RADIUS = 26;
+const CIRC = 2 * Math.PI * RADIUS;
+
+function renderProducts() {
+  grid.innerHTML = '';
+  PRODUCTS.forEach((p, i) => {
+    const pct = Math.min(100, Math.round((p.proteinGrams / 60) * 100));
+    const offset = CIRC - (pct/100)*CIRC;
+    const card = document.createElement('div');
+    card.className = 'card reveal';
+    card.style.setProperty('--offset', offset);
+    card.style.animationDelay = `${i * 0.1}s`;
+    card.innerHTML = `
+      <div class="card-top">
+        <span class="badge">${p.badge}</span>
+        <div class="ring-wrap">
+          <svg width="64" height="64" viewBox="0 0 64 64">
+            <circle class="ring-bg" cx="32" cy="32" r="${RADIUS}"></circle>
+            <circle class="ring-fg" cx="32" cy="32" r="${RADIUS}" style="stroke-dasharray:${CIRC};"></circle>
+          </svg>
+          <div class="ring-label"><b>${p.proteinGrams}g</b><span>protein</span></div>
+        </div>
+      </div>
+      <h3>${p.name}</h3>
+      <p class="desc">${p.description} · ${p.servingSizeGrams}g pack</p>
+      <div class="card-bottom">
+        <span class="price">₹${p.price}</span>
+        <button class="add-btn" title="Add to cart" data-name="${p.name}">+</button>
+      </div>
+    `;
+    grid.appendChild(card);
+
+    card.querySelector('.add-btn').addEventListener('click', function(){
+      this.textContent = '✓';
+      this.classList.add('added');
+      showSuccess(`${this.dataset.name} added to cart!`);
+      setTimeout(()=>{ this.textContent = '+'; this.classList.remove('added'); }, 1400);
+    });
+  });
+
+  const allCards = document.querySelectorAll('.card');
+  allCards.forEach(el => io.observe(el));
+}
+
+const revealEls = document.querySelectorAll('.reveal');
 revealEls.forEach(el=>io.observe(el));
 
-// calculator
+// ========== CALCULATOR ==========
 const weightSlider = document.getElementById('weight');
 const weightVal = document.getElementById('weight-val');
 const targetEl = document.getElementById('protein-target');
@@ -453,48 +513,82 @@ const explainEl = document.getElementById('protein-explain');
 const recoList = document.getElementById('reco-list');
 const actBtns = document.querySelectorAll('.act-btn');
 let mult = 1.2;
+let currentActivity = 'active';
 
 const explainMap = {
-  0.8: "Baseline intake for general health at a mostly sedentary lifestyle.",
-  1.2: "Supports an active lifestyle with regular walking or light workouts.",
-  1.6: "Built for consistent strength training or intense cardio sessions.",
-  2.0: "Optimized for active muscle building and recovery."
+  sedentary: "Baseline intake for general health at sedentary lifestyle.",
+  active: "Supports an active lifestyle with regular walking or light workouts.",
+  training_hard: "Built for consistent strength training or intense cardio.",
+  building_muscle: "Optimized for active muscle building and recovery."
 };
 
-function updateCalc(){
+async function updateCalc(){
   const w = parseInt(weightSlider.value);
   weightVal.textContent = w;
+  
+  try {
+    const response = await fetch(`${API_URL}/api/calculate`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ weightKg: w, activity: currentActivity })
+    });
+    
+    const result = await response.json();
+    if (result.success) {
+      const { dailyTargetGrams, recommended } = result.data;
+      targetEl.textContent = dailyTargetGrams;
+      explainEl.textContent = explainMap[currentActivity];
+      recoList.innerHTML = '';
+      recommended.forEach((p, count) => {
+        const li = document.createElement('li');
+        li.style.animation = `slideUp 0.5s ease-out forwards`;
+        li.style.animationDelay = `${count * 0.1}s`;
+        li.innerHTML = `<span>${p.name}</span><span>${p.proteinGrams}g</span>`;
+        recoList.appendChild(li);
+      });
+    }
+  } catch (error) {
+    localCalculate(w);
+  }
+}
+
+function localCalculate(w) {
   const target = Math.round(w * mult);
   targetEl.textContent = target;
-  explainEl.textContent = explainMap[mult];
-
-  // recommend snacks to cover ~35% of daily target in one sitting
+  explainEl.textContent = explainMap[currentActivity];
   const gap = Math.round(target * 0.35);
   let remaining = gap;
-  const sorted = [...PRODUCTS].sort((a,b)=>b.protein-a.protein);
+  const sorted = [...PRODUCTS].sort((a,b)=>b.proteinGrams-a.proteinGrams);
   recoList.innerHTML = '';
   let count = 0;
   for(const p of sorted){
     if(remaining <= 0 || count >= 3) break;
     const li = document.createElement('li');
-    li.innerHTML = `<span>${p.name}</span><span>${p.protein}g</span>`;
+    li.style.animation = `slideUp 0.5s ease-out forwards`;
+    li.style.animationDelay = `${count * 0.1}s`;
+    li.innerHTML = `<span>${p.name}</span><span>${p.proteinGrams}g</span>`;
     recoList.appendChild(li);
-    remaining -= p.protein;
+    remaining -= p.proteinGrams;
     count++;
   }
 }
+
 weightSlider.addEventListener('input', updateCalc);
-actBtns.forEach(btn=>{
+actBtns.forEach((btn, idx)=>{
+  const activities = ['sedentary', 'active', 'training_hard', 'building_muscle'];
+  const mults = [0.8, 1.2, 1.6, 2.0];
+  btn.dataset.activity = activities[idx];
   btn.addEventListener('click', ()=>{
     actBtns.forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
-    mult = parseFloat(btn.dataset.mult);
+    mult = mults[idx];
+    currentActivity = activities[idx];
     updateCalc();
   });
 });
 
-// Initialize calculator after products load
-window.addEventListener('load', updateCalc);
+loadProducts();
+</script>
 </script>
 </body>
 </html>
