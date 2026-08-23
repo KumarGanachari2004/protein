@@ -1,4 +1,8 @@
 {
+  "version": 2,
+  "public": true,
+  "buildCommand": "true",
+  "outputDirectory": ".",
   "rewrites": [
     {
       "source": "/(.*)",
