@@ -363,52 +363,75 @@ footer{background:var(--olive);color:var(--cream);padding:60px 6% 30px;border-ra
 </footer>
 
 <script>
-const PRODUCTS = [
-  {name:"CJ Protein Ladoo", desc:"Roasted gram, almond & jaggery, hand-rolled.", protein:12, serving:40, price:149, badge:"Bestseller"},
-  {name:"Peanut Protein Crunch Bar", desc:"Crispy roasted peanut bar, no refined sugar.", protein:10, serving:35, price:99, badge:"High Fibre"},
-  {name:"Roasted Chana Masala Mix", desc:"Tangy roasted chana, air-fried not deep-fried.", protein:9, serving:30, price:79, badge:"Vegan"},
-  {name:"Sprouted Moong Protein Bites", desc:"Sprouted moong, oats & seeds, baked fresh.", protein:8, serving:30, price:89, badge:"Gut Friendly"},
-  {name:"Multigrain Protein Cookies", desc:"2 cookies of ragi, oats & whey protein.", protein:7, serving:40, price:69, badge:"Kids Love It"},
-  {name:"Whey Protein Energy Balls", desc:"Cocoa + whey isolate, post-workout ready.", protein:14, serving:45, price:129, badge:"Max Protein"},
-];
+const API_URL = 'http://localhost:5000'; // Change this to your deployed backend URL
+let PRODUCTS = [];
 
-const grid = document.getElementById('product-grid');
-const RADIUS = 26; // matches svg r
-const CIRC = 2 * Math.PI * RADIUS;
+// Fetch products from backend
+async function loadProducts() {
+  try {
+    const response = await fetch(`${API_URL}/api/products`);
+    if (!response.ok) throw new Error('Failed to fetch products');
+    
+    const data = await response.json();
+    PRODUCTS = data.map(p => ({
+      ...p,
+      desc: p.description,
+      protein: p.proteinGrams,
+      serving: p.servingSizeGrams
+    }));
+    renderProducts();
+  } catch (error) {
+    console.error('Error loading products:', error);
+    alert('Could not load products. Make sure backend is running on http://localhost:5000');
+  }
+}
 
-PRODUCTS.forEach((p, i) => {
-  // percent of an assumed 60g/day target per snack, capped visually at 100
-  const pct = Math.min(100, Math.round((p.protein / 60) * 100));
-  const offset = CIRC - (pct/100)*CIRC;
-  const card = document.createElement('div');
-  card.className = 'card reveal';
-  card.style.setProperty('--offset', offset);
-  card.innerHTML = `
-    <div class="card-top">
-      <span class="badge">${p.badge}</span>
-      <div class="ring-wrap">
-        <svg width="64" height="64" viewBox="0 0 64 64">
-          <circle class="ring-bg" cx="32" cy="32" r="${RADIUS}"></circle>
-          <circle class="ring-fg" cx="32" cy="32" r="${RADIUS}" style="stroke-dasharray:${CIRC};"></circle>
-        </svg>
-        <div class="ring-label"><b>${p.protein}g</b><span>protein</span></div>
+function renderProducts() {
+  const grid = document.getElementById('product-grid');
+  grid.innerHTML = '';
+  const RADIUS = 26;
+  const CIRC = 2 * Math.PI * RADIUS;
+
+  PRODUCTS.forEach((p, i) => {
+    const pct = Math.min(100, Math.round((p.protein / 60) * 100));
+    const offset = CIRC - (pct/100)*CIRC;
+    const card = document.createElement('div');
+    card.className = 'card reveal';
+    card.style.setProperty('--offset', offset);
+    card.innerHTML = `
+      <div class="card-top">
+        <span class="badge">${p.badge || 'Popular'}</span>
+        <div class="ring-wrap">
+          <svg width="64" height="64" viewBox="0 0 64 64">
+            <circle class="ring-bg" cx="32" cy="32" r="${RADIUS}"></circle>
+            <circle class="ring-fg" cx="32" cy="32" r="${RADIUS}" style="stroke-dasharray:${CIRC};"></circle>
+          </svg>
+          <div class="ring-label"><b>${p.protein}g</b><span>protein</span></div>
+        </div>
       </div>
-    </div>
-    <h3>${p.name}</h3>
-    <p class="desc">${p.desc} · ${p.serving}g pack</p>
-    <div class="card-bottom">
-      <span class="price">₹${p.price}</span>
-      <button class="add-btn" title="Add to cart">+</button>
-    </div>
-  `;
-  grid.appendChild(card);
+      <h3>${p.name}</h3>
+      <p class="desc">${p.desc} · ${p.serving}g pack</p>
+      <div class="card-bottom">
+        <span class="price">₹${p.price}</span>
+        <button class="add-btn" title="Add to cart">+</button>
+      </div>
+    `;
+    grid.appendChild(card);
 
-  card.querySelector('.add-btn').addEventListener('click', function(){
-    this.textContent = '✓';
-    this.classList.add('added');
-    setTimeout(()=>{ this.textContent = '+'; this.classList.remove('added'); }, 1400);
+    card.querySelector('.add-btn').addEventListener('click', function(){
+      this.textContent = '✓';
+      this.classList.add('added');
+      setTimeout(()=>{ this.textContent = '+'; this.classList.remove('added'); }, 1400);
+    });
   });
-});
+
+  // Re-observe reveal elements
+  const revealEls = document.querySelectorAll('.reveal');
+  revealEls.forEach(el=>io.observe(el));
+  document.querySelectorAll('.card').forEach(el=>io.observe(el));
+}
+
+loadProducts();
 
 // reveal on scroll
 const revealEls = document.querySelectorAll('.reveal');
@@ -421,7 +444,6 @@ const io = new IntersectionObserver((entries)=>{
   });
 },{threshold:0.15});
 revealEls.forEach(el=>io.observe(el));
-document.querySelectorAll('.card').forEach(el=>io.observe(el));
 
 // calculator
 const weightSlider = document.getElementById('weight');
@@ -470,7 +492,9 @@ actBtns.forEach(btn=>{
     updateCalc();
   });
 });
-updateCalc();
+
+// Initialize calculator after products load
+window.addEventListener('load', updateCalc);
 </script>
 </body>
 </html>
