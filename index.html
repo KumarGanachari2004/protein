@@ -409,7 +409,12 @@ footer{background:var(--olive);color:var(--cream);padding:60px 6% 30px;border-ra
 <script>
 <script>
 // ========== CONFIG ==========
-const API_URL = 'http://localhost:5000';
+// For production: replace with your Railway backend URL
+// Example: const API_URL = 'https://protein-backend-xyz.railway.app';
+const API_URL = window.location.hostname === 'localhost' 
+  ? 'http://localhost:5000'  // Local development
+  : 'https://protein-backend-xyz.railway.app'; // Production - UPDATE THIS
+
 let PRODUCTS = [];
 
 // ========== FETCH FROM BACKEND ==========
