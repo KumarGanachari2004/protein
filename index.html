@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CJ Protein Snacks — Fuel Your Hustle</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+:root{
+  --cream:#FAF7EE;
+  --charcoal:#1B1F18;
+  --olive:#3D4F2B;
+  --olive-light:#E9EEDD;
+  --lime:#C6F135;
+  --coral:#FF5A36;
+  --muted:#6B7160;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--cream);
+  color:var(--charcoal);
+  font-family:'Inter',sans-serif;
+  overflow-x:hidden;
+}
+h1,h2,h3,.display{
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:700;
+  letter-spacing:-0.02em;
+}
+a{text-decoration:none;color:inherit;}
+button{font-family:inherit;cursor:pointer;border:none;}
+
+/* ===== NAV ===== */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:20px 6%;
+  background:rgba(250,247,238,0.85);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(27,31,24,0.08);
+}
+.logo{
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:700;font-size:22px;
+  display:flex;align-items:center;gap:8px;
+}
+.logo span{
+  background:var(--charcoal);color:var(--lime);
+  padding:2px 8px;border-radius:6px;font-size:20px;
+}
+.nav-links{display:flex;gap:32px;font-size:14px;font-weight:600;}
+.nav-links a{opacity:0.75;transition:opacity 0.2s;}
+.nav-links a:hover{opacity:1;}
+.nav-cta{
+  background:var(--charcoal);color:var(--lime);
+  padding:10px 22px;border-radius:100px;font-size:14px;font-weight:600;
+  transition:transform 0.25s ease, background 0.25s ease;
+}
+.nav-cta:hover{transform:translateY(-2px);background:var(--olive);}
+
+/* ===== HERO ===== */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:140px 6% 80px;
+  position:relative;
+  overflow:hidden;
+}
+.blob{
+  position:absolute;border-radius:50%;filter:blur(70px);opacity:0.5;
+  animation:float 10s ease-in-out infinite;
+}
+.blob1{width:380px;height:380px;background:var(--lime);top:-100px;right:-80px;}
+.blob2{width:300px;height:300px;background:var(--coral);opacity:0.25;bottom:-60px;left:-60px;animation-delay:2s;}
+@keyframes float{
+  0%,100%{transform:translate(0,0) scale(1);}
+  50%{transform:translate(30px,-30px) scale(1.08);}
+}
+.eyebrow{
+  font-size:13px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--olive);margin-bottom:18px;display:flex;align-items:center;gap:10px;
+}
+.eyebrow::before{content:'';width:26px;height:2px;background:var(--olive);display:inline-block;}
+.hero h1{
+  font-size:clamp(42px,7vw,88px);
+  line-height:0.98;
+  max-width:900px;
+  position:relative;z-index:2;
+}
+.hero h1 .rot-wrap{
+  display:inline-block;position:relative;height:1.05em;overflow:hidden;vertical-align:bottom;
+  min-width:340px;
+}
+.rot-word{
+  position:absolute;left:0;top:0;color:var(--coral);
+  animation:rotateWords 6s infinite;
+}
+.rot-word:nth-child(1){animation-delay:0s;}
+.rot-word:nth-child(2){animation-delay:2s;}
+.rot-word:nth-child(3){animation-delay:4s;}
+@keyframes rotateWords{
+  0%,30%{opacity:1;transform:translateY(0);}
+  33%,97%{opacity:0;transform:translateY(-20px);}
+  100%{opacity:0;}
+}
+.hero p{
+  font-size:19px;color:var(--muted);max-width:520px;margin:26px 0 36px;
+  line-height:1.6;position:relative;z-index:2;
+}
+.hero-ctas{display:flex;gap:16px;align-items:center;position:relative;z-index:2;flex-wrap:wrap;}
+.btn-primary{
+  background:var(--coral);color:white;padding:17px 34px;border-radius:100px;
+  font-weight:700;font-size:15px;position:relative;overflow:hidden;
+  transition:transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow:0 6px 0 #c73f22;
+}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 9px 0 #c73f22;}
+.btn-primary:active{transform:translateY(3px);box-shadow:0 2px 0 #c73f22;}
+.btn-primary::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,0.4),transparent);
+  transform:translateX(-120%);
+}
+.btn-primary:hover::after{animation:shine 0.9s ease;}
+@keyframes shine{to{transform:translateX(120%);}}
+.btn-ghost{
+  padding:17px 30px;border-radius:100px;font-weight:700;font-size:15px;
+  border:2px solid var(--charcoal);transition:all 0.25s ease;
+}
+.btn-ghost:hover{background:var(--charcoal);color:var(--lime);}
+
+.hero-stats{display:flex;gap:40px;margin-top:56px;position:relative;z-index:2;}
+.stat{}
+.stat b{font-family:'Space Grotesk';font-size:30px;display:block;}
+.stat span{font-size:13px;color:var(--muted);}
+
+/* ===== MARQUEE ===== */
+.marquee-wrap{background:var(--charcoal);padding:16px 0;overflow:hidden;white-space:nowrap;}
+.marquee{display:inline-block;animation:scroll 22s linear infinite;}
+.marquee span{
+  color:var(--lime);font-family:'Space Grotesk';font-weight:600;font-size:15px;
+  margin:0 28px;text-transform:uppercase;letter-spacing:0.05em;
+}
+@keyframes scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* ===== SECTION HEADER ===== */
+.section{padding:100px 6%;}
+.section-head{max-width:640px;margin-bottom:56px;}
+.tag{
+  font-size:12px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--coral);margin-bottom:12px;display:block;
+}
+.section-head h2{font-size:clamp(30px,4vw,46px);}
+.section-head p{color:var(--muted);margin-top:14px;font-size:17px;line-height:1.6;}
+
+/* ===== PRODUCTS ===== */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:26px;}
+.card{
+  background:white;border-radius:22px;padding:28px;
+  border:1px solid rgba(27,31,24,0.08);
+  transition:transform 0.3s ease, box-shadow 0.3s ease;
+  position:relative;
+}
+.card:hover{transform:translateY(-8px);box-shadow:0 20px 40px rgba(27,31,24,0.1);}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px;}
+.badge{
+  background:var(--olive-light);color:var(--olive);font-size:11px;font-weight:700;
+  padding:5px 10px;border-radius:100px;text-transform:uppercase;letter-spacing:0.05em;
+}
+.ring-wrap{position:relative;width:64px;height:64px;flex-shrink:0;}
+.ring-wrap svg{transform:rotate(-90deg);}
+.ring-bg{fill:none;stroke:var(--olive-light);stroke-width:6;}
+.ring-fg{
+  fill:none;stroke:var(--coral);stroke-width:6;stroke-linecap:round;
+  stroke-dasharray:163;stroke-dashoffset:163;
+  transition:stroke-dashoffset 1.4s cubic-bezier(.2,.8,.2,1);
+}
+.card.in-view .ring-fg{stroke-dashoffset:var(--offset);}
+.ring-label{
+  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+.ring-label b{font-size:15px;font-family:'Space Grotesk';}
+.ring-label span{font-size:9px;color:var(--muted);}
+.card h3{font-size:20px;margin-bottom:6px;}
+.card .desc{color:var(--muted);font-size:14px;line-height:1.5;margin-bottom:18px;}
+.card-bottom{display:flex;justify-content:space-between;align-items:center;}
+.price{font-family:'Space Grotesk';font-weight:700;font-size:19px;}
+.add-btn{
+  background:var(--charcoal);color:var(--lime);
+  width:42px;height:42px;border-radius:50%;font-size:20px;
+  display:flex;align-items:center;justify-content:center;
+  transition:transform 0.25s ease, background 0.25s ease;
+}
+.add-btn:hover{background:var(--coral);color:white;transform:rotate(90deg) scale(1.1);}
+.add-btn.added{background:var(--olive);}
+
+/* ===== CALCULATOR ===== */
+.calc-section{background:var(--charcoal);color:var(--cream);border-radius:32px;margin:0 6%;padding:70px 6%;}
+.calc-section .tag{color:var(--lime);}
+.calc-section h2{color:var(--cream);}
+.calc-section p{color:rgba(250,247,238,0.65);}
+.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:44px;align-items:center;}
+@media(max-width:800px){.calc-grid{grid-template-columns:1fr;}}
+.calc-controls label{font-size:13px;font-weight:600;color:var(--lime);display:block;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.05em;}
+.slider-row{margin-bottom:30px;}
+input[type=range]{
+  width:100%;-webkit-appearance:none;height:6px;border-radius:10px;
+  background:rgba(250,247,238,0.15);outline:none;
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:22px;height:22px;border-radius:50%;
+  background:var(--lime);cursor:pointer;border:4px solid var(--charcoal);box-shadow:0 0 0 2px var(--lime);
+}
+.slider-val{font-family:'Space Grotesk';font-size:15px;margin-top:8px;color:white;}
+.activity-btns{display:flex;gap:10px;flex-wrap:wrap;}
+.act-btn{
+  padding:10px 16px;border-radius:100px;border:1.5px solid rgba(250,247,238,0.25);
+  background:transparent;color:var(--cream);font-size:13px;font-weight:600;
+  transition:all 0.2s ease;
+}
+.act-btn.active,.act-btn:hover{background:var(--lime);color:var(--charcoal);border-color:var(--lime);}
+.calc-result{
+  background:rgba(250,247,238,0.06);border-radius:24px;padding:36px;
+  border:1px solid rgba(250,247,238,0.12);
+}
+.result-num{font-family:'Space Grotesk';font-size:64px;font-weight:700;color:var(--lime);line-height:1;}
+.result-num span{font-size:22px;color:var(--cream);}
+.calc-result p.explain{margin:10px 0 24px;color:rgba(250,247,238,0.6);font-size:14px;}
+.reco{border-top:1px solid rgba(250,247,238,0.15);padding-top:20px;}
+.reco b{display:block;font-size:12px;text-transform:uppercase;letter-spacing:0.1em;color:var(--lime);margin-bottom:10px;}
+#reco-list{list-style:none;font-size:14px;line-height:2;}
+#reco-list li{display:flex;justify-content:space-between;}
+
+/* ===== TICKER TAGLINE ===== */
+.tagline-strip{
+  text-align:center;padding:90px 6%;
+}
+.tagline-strip h2{
+  font-size:clamp(28px,5vw,54px);max-width:900px;margin:0 auto;line-height:1.25;
+}
+.tagline-strip h2 em{font-style:normal;color:var(--coral);}
+
+/* ===== FOOTER ===== */
+footer{background:var(--olive);color:var(--cream);padding:60px 6% 30px;border-radius:32px 32px 0 0;margin-top:20px;}
+.foot-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:30px;margin-bottom:40px;}
+.foot-top h3{font-size:30px;max-width:420px;}
+.foot-cta{
+  background:var(--lime);color:var(--charcoal);padding:16px 30px;border-radius:100px;
+  font-weight:700;font-size:15px;transition:transform 0.25s ease;display:inline-block;height:fit-content;
+}
+.foot-cta:hover{transform:scale(1.05);}
+.foot-bottom{
+  border-top:1px solid rgba(250,247,238,0.2);padding-top:22px;
+  display:flex;justify-content:space-between;font-size:13px;color:rgba(250,247,238,0.6);flex-wrap:wrap;gap:10px;
+}
+
+/* reveal on scroll */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease, transform 0.7s ease;}
+.reveal.show{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo"><span>CJ</span> Protein Snacks</div>
+  <div class="nav-links">
+    <a href="#shop">Shop</a>
+    <a href="#calc">Protein Calculator</a>
+    <a href="#about">Why CJ</a>
+  </div>
+  <a href="#shop" class="nav-cta">Shop Now →</a>
+</nav>
+
+<section class="hero">
+  <div class="blob blob1"></div>
+  <div class="blob blob2"></div>
+  <div class="eyebrow">100% Real Protein · Zero Guilt</div>
+  <h1>Snacks that<br>
+    <span class="rot-wrap">
+      <span class="rot-word">BUILD MUSCLE.</span>
+      <span class="rot-word">KILL CRAVINGS.</span>
+      <span class="rot-word">HIT DIFFERENT.</span>
+    </span>
+  </h1>
+  <p>Roasted, not fried. Protein-packed, not powder-stuffed. CJ Protein Snacks turns your 4pm crash into your best set of the day.</p>
+  <div class="hero-ctas">
+    <a href="#shop" class="btn-primary">Explore Snacks 🔥</a>
+    <a href="#calc" class="btn-ghost">Calculate My Protein</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><b>6+</b><span>Protein-rich snacks</span></div>
+    <div class="stat"><b>14g</b><span>Max protein / pack</span></div>
+    <div class="stat"><b>0g</b><span>Refined sugar added</span></div>
+  </div>
+</section>
+
+<div class="marquee-wrap">
+  <div class="marquee">
+    <span>★ FUEL YOUR HUSTLE</span><span>★ PROTEIN YOU CAN TASTE</span><span>★ SNACK SMART, LIFT HEAVY</span>
+    <span>★ FUEL YOUR HUSTLE</span><span>★ PROTEIN YOU CAN TASTE</span><span>★ SNACK SMART, LIFT HEAVY</span>
+    <span>★ FUEL YOUR HUSTLE</span><span>★ PROTEIN YOU CAN TASTE</span><span>★ SNACK SMART, LIFT HEAVY</span>
+  </div>
+</div>
+
+<section class="section" id="shop">
+  <div class="section-head reveal">
+    <span class="tag">The Lineup</span>
+    <h2>Pick your protein.</h2>
+    <p>Every ring below is real — it fills to show exactly how much of your daily protein need one pack covers.</p>
+  </div>
+  <div class="grid" id="product-grid"></div>
+</section>
+
+<section class="section" id="calc">
+  <div class="calc-section reveal">
+    <span class="tag">Know Your Number</span>
+    <h2>How much protein do you actually need?</h2>
+    <p>Move the sliders — we'll tell you the target and which CJ snacks close the gap.</p>
+    <div class="calc-grid">
+      <div class="calc-controls">
+        <div class="slider-row">
+          <label>Body weight (kg)</label>
+          <input type="range" id="weight" min="35" max="120" value="65">
+          <div class="slider-val"><span id="weight-val">65</span> kg</div>
+        </div>
+        <div class="slider-row">
+          <label>Activity level</label>
+          <div class="activity-btns">
+            <button class="act-btn" data-mult="0.8">Sedentary</button>
+            <button class="act-btn active" data-mult="1.2">Active</button>
+            <button class="act-btn" data-mult="1.6">Training hard</button>
+            <button class="act-btn" data-mult="2.0">Building muscle</button>
+          </div>
+        </div>
+      </div>
+      <div class="calc-result">
+        <div class="result-num"><span id="protein-target">78</span><span> g / day</span></div>
+        <p class="explain" id="protein-explain">Recommended daily protein based on your weight and activity level.</p>
+        <div class="reco">
+          <b>Snacks to help you get there</b>
+          <ul id="reco-list"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tagline-strip reveal">
+  <h2>Real food. Real protein. <em>Real results.</em><br>No shakes, no powder, no excuses.</h2>
+</section>
+
+<footer id="about">
+  <div class="foot-top">
+    <h3>Ready to fuel your hustle? Your next set starts with your next snack.</h3>
+    <a href="#shop" class="foot-cta">Shop CJ Protein Snacks →</a>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 CJ Protein Snacks. All rights reserved.</span>
+    <span>Made for people who lift, run, hustle & grind.</span>
+  </div>
+</footer>
+
+<script>
+const PRODUCTS = [
+  {name:"CJ Protein Ladoo", desc:"Roasted gram, almond & jaggery, hand-rolled.", protein:12, serving:40, price:149, badge:"Bestseller"},
+  {name:"Peanut Protein Crunch Bar", desc:"Crispy roasted peanut bar, no refined sugar.", protein:10, serving:35, price:99, badge:"High Fibre"},
+  {name:"Roasted Chana Masala Mix", desc:"Tangy roasted chana, air-fried not deep-fried.", protein:9, serving:30, price:79, badge:"Vegan"},
+  {name:"Sprouted Moong Protein Bites", desc:"Sprouted moong, oats & seeds, baked fresh.", protein:8, serving:30, price:89, badge:"Gut Friendly"},
+  {name:"Multigrain Protein Cookies", desc:"2 cookies of ragi, oats & whey protein.", protein:7, serving:40, price:69, badge:"Kids Love It"},
+  {name:"Whey Protein Energy Balls", desc:"Cocoa + whey isolate, post-workout ready.", protein:14, serving:45, price:129, badge:"Max Protein"},
+];
+
+const grid = document.getElementById('product-grid');
+const RADIUS = 26; // matches svg r
+const CIRC = 2 * Math.PI * RADIUS;
+
+PRODUCTS.forEach((p, i) => {
+  // percent of an assumed 60g/day target per snack, capped visually at 100
+  const pct = Math.min(100, Math.round((p.protein / 60) * 100));
+  const offset = CIRC - (pct/100)*CIRC;
+  const card = document.createElement('div');
+  card.className = 'card reveal';
+  card.style.setProperty('--offset', offset);
+  card.innerHTML = `
+    <div class="card-top">
+      <span class="badge">${p.badge}</span>
+      <div class="ring-wrap">
+        <svg width="64" height="64" viewBox="0 0 64 64">
+          <circle class="ring-bg" cx="32" cy="32" r="${RADIUS}"></circle>
+          <circle class="ring-fg" cx="32" cy="32" r="${RADIUS}" style="stroke-dasharray:${CIRC};"></circle>
+        </svg>
+        <div class="ring-label"><b>${p.protein}g</b><span>protein</span></div>
+      </div>
+    </div>
+    <h3>${p.name}</h3>
+    <p class="desc">${p.desc} · ${p.serving}g pack</p>
+    <div class="card-bottom">
+      <span class="price">₹${p.price}</span>
+      <button class="add-btn" title="Add to cart">+</button>
+    </div>
+  `;
+  grid.appendChild(card);
+
+  card.querySelector('.add-btn').addEventListener('click', function(){
+    this.textContent = '✓';
+    this.classList.add('added');
+    setTimeout(()=>{ this.textContent = '+'; this.classList.remove('added'); }, 1400);
+  });
+});
+
+// reveal on scroll
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('show');
+      if(e.target.classList.contains('card')) e.target.classList.add('in-view');
+    }
+  });
+},{threshold:0.15});
+revealEls.forEach(el=>io.observe(el));
+document.querySelectorAll('.card').forEach(el=>io.observe(el));
+
+// calculator
+const weightSlider = document.getElementById('weight');
+const weightVal = document.getElementById('weight-val');
+const targetEl = document.getElementById('protein-target');
+const explainEl = document.getElementById('protein-explain');
+const recoList = document.getElementById('reco-list');
+const actBtns = document.querySelectorAll('.act-btn');
+let mult = 1.2;
+
+const explainMap = {
+  0.8: "Baseline intake for general health at a mostly sedentary lifestyle.",
+  1.2: "Supports an active lifestyle with regular walking or light workouts.",
+  1.6: "Built for consistent strength training or intense cardio sessions.",
+  2.0: "Optimized for active muscle building and recovery."
+};
+
+function updateCalc(){
+  const w = parseInt(weightSlider.value);
+  weightVal.textContent = w;
+  const target = Math.round(w * mult);
+  targetEl.textContent = target;
+  explainEl.textContent = explainMap[mult];
+
+  // recommend snacks to cover ~35% of daily target in one sitting
+  const gap = Math.round(target * 0.35);
+  let remaining = gap;
+  const sorted = [...PRODUCTS].sort((a,b)=>b.protein-a.protein);
+  recoList.innerHTML = '';
+  let count = 0;
+  for(const p of sorted){
+    if(remaining <= 0 || count >= 3) break;
+    const li = document.createElement('li');
+    li.innerHTML = `<span>${p.name}</span><span>${p.protein}g</span>`;
+    recoList.appendChild(li);
+    remaining -= p.protein;
+    count++;
+  }
+}
+weightSlider.addEventListener('input', updateCalc);
+actBtns.forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    actBtns.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    mult = parseFloat(btn.dataset.mult);
+    updateCalc();
+  });
+});
+updateCalc();
+</script>
+</body>
+</html>
